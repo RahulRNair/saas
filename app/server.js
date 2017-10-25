@@ -41,7 +41,7 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
+    res.json({ message: 'welcome' });
 });
 
 // on routes that end in /bears
@@ -51,13 +51,21 @@ router.route('/users')
     // create a user (accessed at POST http://localhost:8080/api/users)
     .post(function(req, res) {
 
-        res.json({ message: 'User created!' });
+        res.json({  
+        			status:200,
+        			message: 'User created!',
+        			data:''
+        		});
 
     })
 
     // get all the users (accessed at GET http://localhost:8080/api/users)
     .get(function(req, res) {
-        res.json({ message: 'Fetched User Details' });
+        res.json({ 
+        			status:200,
+        			message: 'Fetched User Details',
+        			data:''
+        		});
     });
 
 
