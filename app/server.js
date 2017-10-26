@@ -21,8 +21,7 @@ var app        = express();
 var morgan     = require('morgan');
 var Joi        = require('joi');
 var pgp        = require('pg-promise')(/*options*/);
-var csrf = require( 'csurf' ) ;
-var cookieParser = require('cookie-parser')
+
 
 /***************** Database Configuration ***********/
 var config = {
@@ -34,7 +33,7 @@ var config = {
     max: 100, 
     idleTimeoutMillis: 30000, 
 };
-var csrfProtection = csrf({ cookie: true })
+
 var db = pgp(config);
 
 // configure app
@@ -43,7 +42,7 @@ app.use(morgan('dev')); // log requests to the console
 // configure body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cookieParser())
+
 var port     = process.env.PORT || 8081; // set our port
 
 
@@ -53,7 +52,6 @@ var router = express.Router();
 // middleware to use for all requests
 router.use(function(req, res, next) {
     // do logging
-    //res.locals.csrftoken = req.csrfToken() ;
     console.log('Something is happening.');
     next();
 });
