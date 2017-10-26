@@ -71,6 +71,17 @@ const getpreferencesSchema = Joi.object({
   infastructuretype: Joi.string().min(2).required(),
   noofdailyassesments: Joi.number().integer().positive().required()
 });
+const getcontactSchema = Joi.object({
+  customerid: Joi.number().integer().positive().required(),
+  name: Joi.string().min(2).required(),
+  addr1: Joi.string().min(2).required(),
+  addr2: Joi.string().min(2).required(),
+  city: Joi.string().min(2).required(),
+  state: Joi.string().min(2).required(),
+  zip: Joi.string().min(2).required(),
+  phone: Joi.string().min(2).required(),
+  email: Joi.string().min(2).required()
+});
 // on routes that end in /bears
 // ----------------------------------------------------
 router.route('/customer')
@@ -135,7 +146,7 @@ router.route('/customer/:userID')
 	    });
     });
 
- router.route('/preferences')
+ router.route('/preference')
 
  .post(function(req, res) {
  		const ret = Joi.validate(req.body, getpreferencesSchema, {
@@ -160,6 +171,44 @@ router.route('/customer/:userID')
 			        .json({
 			          status: 'success',
 			          message: 'preferences Created Successfully!'
+			        });
+			    })
+			    .catch(function (err) {
+			    	console.log(err);
+			      res.status(500)
+			        .json({
+			          status: 'failed',
+			          message: 'Internal Server Error'
+			        });
+			});
+		}
+    });
+
+  router.route('/contact')
+
+ .post(function(req, res) {
+ 		const ret = Joi.validate(req.body, getcontactSchema, {
+		// return an error if body has an unrecognised property
+		allowUnknown: false,
+		// return all errors a payload contains, not just the first one Joi finds
+		//abortEarly: false
+		});
+		if (ret.error) {
+			res.status(400).json({
+			          status: 'error',
+			          message: ret.error.details[0].message
+			        });;
+		}
+		else
+		{
+	        db.none('insert into contact(customerid,name,addr1,addr2,city,state,zip,phone,email)' +
+			      'values(${customerid},${name},${addr1},${addr2},${city},${state},${zip},${phone},${email})',
+			    req.body)
+			    .then(function () {
+			      res.status(200)
+			        .json({
+			          status: 'success',
+			          message: 'Contact Created Successfully!'
 			        });
 			    })
 			    .catch(function (err) {
