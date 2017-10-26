@@ -1,9 +1,18 @@
 /*****************************************************
- * Node Js RestApi For trigger Launch Instances in EC2
+ * Node Js RestApi For SaaS Application
  * @Date : 24-OCT-2017
  * @name : Rahul
- * @path : 
+ * @path : Todo: mention git path
  ******************************************************/
+
+
+/******************************************************
+ *  Try to follow the Rules
+ * 1.All request Should be validated and sanitized
+ * 2.use rest api concept for each call(POST,PUT,GET,DELETE)
+ * 3.Add Proper Comments
+ * 4.use proper naming convention
+ /******************************************************/
 
 /***************** call the packages we need***********/
 var express    = require('express');
@@ -36,14 +45,8 @@ app.use(bodyParser.json());
 var port     = process.env.PORT || 8081; // set our port
 
 
-/*
- * POST - For create new request
- * PUT - Update request
- * DELETE - Delete request
- * GET - Get request
- */
+
 /*********** ROUTES FOR OUR API **************/
-// create our router
 var router = express.Router();
 // middleware to use for all requests
 router.use(function(req, res, next) {
@@ -52,7 +55,6 @@ router.use(function(req, res, next) {
     next();
 });
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
     res.json({ message: 'welcome' });
 });
@@ -171,7 +173,7 @@ router.route('/customer/:userID')
 		}
     });
 
-// REGISTER OUR ROUTES -------------------------------
+// REGISTER ROUTES -------------------------------
 app.use('/api', router);
 
 // START THE SERVER
