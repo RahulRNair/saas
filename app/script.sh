@@ -1,1 +1,1 @@
-$ echo "hello world" | mail -s "a subject" someone@somewhere.com
+$ echo "hello world" | mail -s "a subject" rahulr.7489@gmail.com
